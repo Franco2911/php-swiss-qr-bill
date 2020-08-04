@@ -2,6 +2,7 @@
 
 namespace Sprain\SwissQrBill\Reference;
 
+use Sprain\SwissQrBill\String\StringModifier;
 use Sprain\SwissQrBill\Validator\Exception\InvalidQrPaymentReferenceException;
 use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
@@ -21,14 +22,17 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
 
     public static function generate(?string $customerIdentificationNumber, string $referenceNumber): string
     {
-        $qrPaymentReferenceGenerator = new self();
-
-        if (null !== $customerIdentificationNumber) {
-            $qrPaymentReferenceGenerator->customerIdentificationNumber = $qrPaymentReferenceGenerator->removeWhitespace($customerIdentificationNumber);
-        }
-        $qrPaymentReferenceGenerator->referenceNumber = $qrPaymentReferenceGenerator->removeWhitespace($referenceNumber);
+        $qrPaymentReferenceGenerator = new self($customerIdentificationNumber, $referenceNumber);
 
         return $qrPaymentReferenceGenerator->doGenerate();
+    }
+
+    public function __construct(?string $customerIdentificationNumber, string $referenceNumber)
+    {
+        if (null !== $customerIdentificationNumber) {
+            $this->customerIdentificationNumber = StringModifier::stripWhitespace($customerIdentificationNumber);
+        }
+        $this->referenceNumber = StringModifier::stripWhitespace($referenceNumber);
     }
 
     public function getCustomerIdentificationNumber(): ?string
@@ -41,11 +45,11 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
         return $this->referenceNumber;
     }
 
-    private function doGenerate(): string
+    public function doGenerate(): string
     {
         if (!$this->isValid()) {
             throw new InvalidQrPaymentReferenceException(
-                'The provided data is not valid to generate a qr payment reference number. Use getViolations() to find details.'
+                'The provided data is not valid to generate a qr payment reference number.'
             );
         }
 
@@ -87,11 +91,6 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
             $context->buildViolation('The length of customer identification number + reference number may not exceed 26 characters in total.')
                 ->addViolation();
         }
-    }
-
-    private function removeWhitespace(string $string): string
-    {
-        return preg_replace('/\s+/', '', $string);
     }
 
     private function modulo10(string $number): int
