@@ -4,20 +4,18 @@ use Sprain\SwissQrBill as QrBill;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-// This is an example how to create a classic qr bill:
-// - with reference number
-// - with known debtor
-// - with specified amount
-// - with human-readable additional information
-// - using your brandnew QR-IBAN
+// This is an example how to create a qr bill with an amount of 0.00 and
+// the note "do not use for payment". This is used for "Avisierungen".
+// See https://www.paymentstandards.ch/de/shared/communication-grid/avis.html
 //
-// Likely the most common use-case in the business world.
+// The specifics in this case are:
+// - set an amount of 0.00
+// - add the "do not use for payment" text as additional information. Translations are provided by this library.
 
 // Create a new instance of QrBill, containing default headers with fixed values
 $qrBill = QrBill\QrBill::create();
 
 // Add creditor information
-// Who will receive the payment and to which bank account?
 $qrBill->setCreditor(
     QrBill\DataGroup\Element\CombinedAddress::create(
         'Robert Schneider AG',
@@ -31,31 +29,14 @@ $qrBill->setCreditorInformation(
         'CH4431999123000889012' // This is a special QR-IBAN. Classic IBANs will not be valid here.
     ));
 
-// Add debtor information
-// Who has to pay the invoice? This part is optional.
-//
-// Notice how you can use two different styles of addresses: CombinedAddress or StructuredAddress.
-// They are interchangeable for creditor as well as debtor.
-$qrBill->setUltimateDebtor(
-    QrBill\DataGroup\Element\StructuredAddress::createWithStreet(
-        'Pia-Maria Rutschmann-Schnyder',
-        'Grosse Marktgasse',
-        '28',
-        '9400',
-        'Rorschach',
-        'CH'
-    ));
-
-// Add payment amount information
-// What amount is to be paid?
+// Add payment amount information of 0.00
 $qrBill->setPaymentAmountInformation(
     QrBill\DataGroup\Element\PaymentAmountInformation::create(
         'CHF',
-        2500.25
+        0.00
     ));
 
 // Add payment reference
-// This is what you will need to identify incoming payments.
 $referenceNumber = QrBill\Reference\QrPaymentReferenceGenerator::generate(
     '210000',  // You receive this number from your bank (BESR-ID). Unless your bank is PostFinance, in that case use NULL.
     '313947143000901' // A number to match the payment with your internal data, e.g. an invoice number
@@ -67,10 +48,10 @@ $qrBill->setPaymentReference(
         $referenceNumber
     ));
 
-// Optionally, add some human-readable information about what the bill is for.
+// Add do-not-use-for-payment information
 $qrBill->setAdditionalInformation(
     QrBill\DataGroup\Element\AdditionalInformation::create(
-        'Invoice 123456, Gardening work'
+        QrBill\PaymentPart\Translation\Translation::get('doNotUseForPayment', 'en')
     )
 );
 
@@ -79,10 +60,10 @@ try {
     $qrBill->getQrCode()->writeFile(__DIR__ . '/qr.png');
     $qrBill->getQrCode()->writeFile(__DIR__ . '/qr.svg');
 } catch (Exception $e) {
-	foreach($qrBill->getViolations() as $violation) {
-		print $violation->getMessage()."\n";
-	}
-	exit;
+    foreach($qrBill->getViolations() as $violation) {
+        print $violation->getMessage()."\n";
+    }
+    exit;
 }
 
 // Next: Output full payment parts, depending on the format you want to use:

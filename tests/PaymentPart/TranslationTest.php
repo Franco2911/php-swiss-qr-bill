@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Sprain\Tests\SwissQrBill\PaymentPart;
 
@@ -22,8 +22,8 @@ class TranslationTest extends TestCase
     {
         return [
             ['de', ['paymentPart' => 'Zahlteil']],
-            ['fr', ['paymentPart' => 'Section de paiement']],
-            ['it', ['paymentPart' => 'Sezione di pagamento']],
+            ['fr', ['paymentPart' => 'Section paiement']],
+            ['it', ['paymentPart' => 'Sezione pagamento']],
             ['en', ['paymentPart' => 'Payment part']]
         ];
     }
@@ -40,8 +40,8 @@ class TranslationTest extends TestCase
     {
         return [
             ['de', 'paymentPart', 'Zahlteil'],
-            ['fr', 'paymentPart', 'Section de paiement'],
-            ['it', 'paymentPart', 'Sezione di pagamento'],
+            ['fr', 'paymentPart', 'Section paiement'],
+            ['it', 'paymentPart', 'Sezione pagamento'],
             ['en', 'paymentPart', 'Payment part']
         ];
     }

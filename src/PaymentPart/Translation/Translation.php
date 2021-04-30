@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Sprain\SwissQrBill\PaymentPart\Translation;
 
@@ -22,7 +22,7 @@ class Translation
         ],
 
         'fr' => [
-            'paymentPart' => 'Section de paiement',
+            'paymentPart' => 'Section paiement',
             'creditor' => 'Compte / Payable à',
             'reference' => 'Référence',
             'additionalInformation' => 'Informations supplémentaires',
@@ -38,7 +38,7 @@ class Translation
         ],
 
         'it' => [
-            'paymentPart' => 'Sezione di pagamento',
+            'paymentPart' => 'Sezione pagamento',
             'creditor' => 'Conto / Pagabile a',
             'reference' => 'Riferimento',
             'additionalInformation' => 'Informazioni supplementari',

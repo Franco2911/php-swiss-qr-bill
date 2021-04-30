@@ -1,6 +1,6 @@
 # Swiss QR Bill
 
-[![Build Status](https://travis-ci.org/sprain/php-swiss-qr-bill.svg?branch=master)](https://travis-ci.org/sprain/php-swiss-qr-bill)
+[![Build Status](https://travis-ci.com/sprain/php-swiss-qr-bill.svg?branch=master)](https://travis-ci.com/sprain/php-swiss-qr-bill)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sprain/php-swiss-qr-bill/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sprain/php-swiss-qr-bill/?branch=master)
 
 A PHP library to create Swiss QR Bill payment parts (_QR-Rechnung_), a new standard which replaces the existing inpayment slips since June 30, 2020.
@@ -30,11 +30,24 @@ Do you need help using this library?
 * [Search the existing and closed issues](https://github.com/sprain/php-swiss-qr-bill/issues?q=is%3Aissue) to see if you find your answer there.
 * If you still need help, you may [create an issue](https://github.com/sprain/php-swiss-qr-bill/issues) yourself to ask your question.
 
-Please note that the maintainer of this library will not provide any support by email. The beauty of open source software lies in the fact that everybody can benefit from each other. Therefore questions will only be answered in public.
-
+Please note that the maintainer of this library will not provide any support by email.
+The beauty of open source software lies in the fact that everybody can benefit from each other. Therefore questions will only be answered in public.
 
 ## Support the project
 
 * Do you like this project? [Consider a Github sponsorship.](https://github.com/sponsors/sprain)
 * Would you like to contribute? [Have a look at the open issues.](https://github.com/sprain/php-swiss-qr-bill/issues) Be nice to each other.
 * Spread the word!
+
+
+## Official resources
+The repository contains the official specifications the library is based on:
+
+- [Swiss Implementation Guidelines QR-bill](docs/specs/ig-qr-bill-en-v2.1.pdf)
+- [Technical information about the QR-IID and QR-IBAN](docs/specs/qr-iid_qr-iban-en.pdf)
+- [Style Guide QR-bill](docs/specs/style-guide-en.pdf)
+
+For more official information about the new standards see
+
+- [https://www.paymentstandards.ch/en/home/roadmap/payment-slips.html](https://www.paymentstandards.ch/en/home/roadmap/payment-slips.html)
+- [https://www.six-group.com/interbank-clearing/en/home/standardization/payment-slips.html](https://www.six-group.com/interbank-clearing/en/home/standardization/payment-slips.html)
